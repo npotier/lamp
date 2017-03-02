@@ -4,8 +4,8 @@ source utils.sh
 
 INFO "Setting variables and saving them in LAMP_RESULT.txt"
 
-MYSQL_PASSWORD=$(LC_ALL=C tr -dc 'A-Za-z0-9!#$%&()*+-/<=>?@[]^_{|}' </dev/urandom | head -c 10 ; echo)
-DEPLOY_PASSWORD=$(LC_ALL=C tr -dc 'A-Za-z0-9!#$%&()*+-/<=>?@[]^_{|}' </dev/urandom | head -c 10 ; echo)
+MYSQL_PASSWORD=$(LC_ALL=C tr -dc 'A-Za-z0-9!#$%&' </dev/urandom | head -c 10 ; echo)
+DEPLOY_PASSWORD=$(LC_ALL=C tr -dc 'A-Za-z0-9!#$%&' </dev/urandom | head -c 10 ; echo)
 
 
 RUN "echo 'MYSQL_PASSWORD=$MYSQL_PASSWORD' >> LAMP_RESULT.txt"
@@ -28,7 +28,7 @@ INFO "Installing and securing Apache"
 RUN "apt-get -y -qq install apache2"
 
 RUN "a2dissite 000-default.conf"
-RUN "a2ensite default-ssl"
+RUN "a2dissite default-ssl"
 RUN "sed -i 's/^ServerTokens OS/ServerTokens Prod/' /etc/apache2/conf-enabled/security.conf"
 RUN "sed -i 's/^ServerSignature On/#ServerSignature On/' /etc/apache2/conf-enabled/security.conf"
 RUN "sed -i 's/^#ServerSignature Off/ServerSignature Off/' /etc/apache2/conf-enabled/security.conf"
@@ -111,6 +111,9 @@ RUN "sed -i '/^\[apache-modsecurity\]$/,/^\[/s/enabled[[:blank:]]*=.*/enabled = 
 ################################################################################
 INFO "Creating a user 'deploy' into the group www-data (password in LAMP_RESULT.txt)"
 
-#
 RUN "useradd -g www-data deploy"
 RUN "echo deploy:$DEPLOY_PASSWORD | chpasswd"
+RUN "mkdir -p /home/deploy"
+RUN "chown -R deploy:www-data /home/deploy"
+RUN "usermod -d /home/deploy deploy"
+RUN "usermod -s /bin/bash deploy"
