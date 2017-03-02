@@ -71,6 +71,9 @@ RUN "sed -i 's/#SSLCertificateKeyFile/SSLCertificateKeyFile/g' /etc/apache2/site
 
 if [ $TEMPLATE = "vhost_varnish_ssl.conf" ]
 then
+    INFO "Activating Reverse Proxy SSL"
+    RUN "sed -i 's/#ProxyPass/ProxyPass/g' /etc/apache2/sites-available/$APACHE_DOMAIN.conf"
+    RUN "sed -i 's/#ProxyPassReverse/ProxyPassReverse/g' /etc/apache2/sites-available/$APACHE_DOMAIN.conf"
     RUN "sed -i 's/__VARNISH_PORT__/$VARNISH_PORT/g' /etc/apache2/sites-available/$APACHE_DOMAIN.conf"
 fi
 
