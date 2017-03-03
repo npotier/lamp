@@ -1,34 +1,55 @@
 # LAMP Scripts
-simple LAMP scripts used for setting up servers
+
+This is a collection of old school bash script that i've created in order to provision a LAMP Server. Theses scripts are tested on Debian 8 (Jessie).
 
 Warning : these scripts have been made for my personal use. I'm not a sysadmin so you should use them at your own risks.
 
-## lamp.sh
+## Usage
 
-This script installs :
+```bash
+# Copy theses file on your new server
+$ cd /path/to/lamp
+$ ./vhost.sh
+# MySQL ROOT password an deploy user password will be stored in LAMP_RESULT.txt
+$ cat LAMP_RESULT.txt
+$ ./varnish.sh
+# The script will prompt the port you want Varnish to use. You can leave it empty, it will use the defaut 6081 port
+# Make sure you have configured your DNS so that your domain name redirect to the server
+$ ./vhost.sh
+# Enter your domain name
+$ ./mysql.sh
+# Enter the MySQL root password and the name of the user/database you want to create
+```
 
-* Git
-* Vim
-* Apache2 and securing it (to be improved)
-* MySQL Server
-* iptables and configure it with these basic rules : https://gist.github.com/npotier/0c037e42ae655a8564c2
-* fail2ban and enable it for apache
 
-This script also create a user "deploy" to the group www-data.
+## lamp.sh script
 
-Generated password (MySQL and deploy user) are stored in the output file "LAMP_RESULT.txt"
+Setup of a LAMP Stack :
 
+* **Apache 2.4** with some _security_ features
+* **PHP7** installed from _DotDeb_ Repositories
+* **MySQLServer**
+* **IPTables** with standard ports for a LAMP Stack (Ping, 22, 10022, 53, 80, 443, 25, 587, 110, 143, 123)
+* **Fail2Ban** with standard setup for Apache
+* **Git, Vim, curl**
+
+## varnish.sh script
+
+Install **Varnish 4** and specific settings (contained in varnish/default.vcl). This file is tested fot PHP / Symfony Web applications.
+
+## mysql.sh script
+
+Provision a user and a database
 
 ## vhost.sh
 
-This script configure a new vhost to Apache
+Create a vhost and the corresponding **Apache** configuration. This script use **getssl**, which allows to generate a SSL certificate thanks to Let's encrypt.
 
-Features :
-
-* HTTP and HTTPS
-* HTTPS is managed with getssl (https://github.com/srvrco/getssl)
+If **Varnish** is detected, the script will create an Apache reverse SSL proxy.
 
 
-## utils.sh
 
-This script contains useful functions used by other scripts.
+## TODO
+
+* Improove security best practice configs
+* Use PHP FPM ?
