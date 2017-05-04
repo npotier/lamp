@@ -9,7 +9,7 @@ Warning : these scripts have been made for my personal use. I'm not a sysadmin s
 ```bash
 # Copy theses file on your new server
 $ cd /path/to/lamp
-$ ./vhost.sh
+$ ./lamp.sh
 # MySQL ROOT password an deploy user password will be stored in LAMP_RESULT.txt
 $ cat LAMP_RESULT.txt
 $ ./varnish.sh
