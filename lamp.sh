@@ -43,42 +43,26 @@ RUN "debconf-set-selections <<< 'mysql-server mysql-server/root_password_again p
 RUN "apt-get -y -qq install mysql-server"
 
 ################################################################################
-# PHP 7 Repository
-################################################################################
-INFO "Adding DotDeb Repository to apt list"
-
-RUN "echo 'deb http://packages.dotdeb.org jessie all' > /etc/apt/sources.list.d/dotdeb.list"
-RUN "wget -O- https://www.dotdeb.org/dotdeb.gpg | apt-key add -"
-RUN "apt-get update -qq"
-################################################################################
-# Remove PHP 5
-################################################################################
-INFO "Removing PHP from the system"
-
-RUN "systemctl stop php5-fpm"
-RUN "apt-get autoremove -y -qq --purge php5*"
-
-################################################################################
 # Install PHP7 and dependencies
 ################################################################################
 INFO "Installing PHP7"
 
-RUN "apt-get -y -qq install php7.0"
-RUN "apt-get -y -qq install libapache2-mod-php7.0"
-RUN "apt-get -y -qq install php7.0-mysql"
-RUN "apt-get -y -qq install php7.0-curl"
-RUN "apt-get -y -qq install php7.0-json"
-RUN "apt-get -y -qq install php7.0-gd"
-RUN "apt-get -y -qq install php7.0-mcrypt"
-RUN "apt-get -y -qq install php7.0-msgpack"
-RUN "apt-get -y -qq install php7.0-memcached"
-RUN "apt-get -y -qq install php7.0-intl"
-RUN "apt-get -y -qq install php7.0-sqlite"
+RUN "apt-get -y -qq install php7"
+RUN "apt-get -y -qq install libapache2-mod-php7"
+RUN "apt-get -y -qq install php7-mysql"
+RUN "apt-get -y -qq install php7-curl"
+RUN "apt-get -y -qq install php7-json"
+RUN "apt-get -y -qq install php7-gd"
+RUN "apt-get -y -qq install php7-mcrypt"
+RUN "apt-get -y -qq install php7-msgpack"
+RUN "apt-get -y -qq install php7-memcached"
+RUN "apt-get -y -qq install php7-intl"
+RUN "apt-get -y -qq install php7-sqlite"
 RUN "apt-get -y -qq install php7.0-gmp"
-RUN "apt-get -y -qq install php7.0-geoip"
-RUN "apt-get -y -qq install php7.0-mbstring"
-RUN "apt-get -y -qq install php7.0-xml"
-RUN "apt-get -y -qq install php7.0-zip"
+RUN "apt-get -y -qq install php7-geoip"
+RUN "apt-get -y -qq install php7-mbstring"
+RUN "apt-get -y -qq install php7-xml"
+RUN "apt-get -y -qq install php7-zip"
 
 ################################################################################
 # Firewall
