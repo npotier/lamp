@@ -40,7 +40,7 @@ INFO "Installing MySQL Server (password is set automatically and saved in LAMP_R
 
 RUN "debconf-set-selections <<< 'mysql-server mysql-server/root_password password $MYSQL_PASSWORD'"
 RUN "debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password $MYSQL_PASSWORD'"
-RUN "apt-get -y -qq install mysql-server"
+RUN "apt-get -y -qq install mariadb-server"
 
 ################################################################################
 # Install PHP7 and dependencies
@@ -53,7 +53,7 @@ RUN "apt-get -y -qq install php7.3-mysql"
 RUN "apt-get -y -qq install php7.3-curl"
 RUN "apt-get -y -qq install php7.3-json"
 RUN "apt-get -y -qq install php7.3-gd"
-RUN "apt-get -y -qq install php7.3-mcrypt"
+#RUN "apt-get -y -qq install php7.3-mcrypt"
 RUN "apt-get -y -qq install php7.3-msgpack"
 RUN "apt-get -y -qq install php7.3-memcached"
 RUN "apt-get -y -qq install php7.3-intl"
