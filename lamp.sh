@@ -16,9 +16,9 @@ RUN "echo 'DEPLOY_PASSWORD=$DEPLOY_PASSWORD' >> LAMP_RESULT.txt"
 # Install tool
 ################################################################################
 
-INFO "Installing tools : Git, Vim, Curl"
+INFO "Installing tools : Git, Vim, Curl, Zip"
 RUN "apt-get -y -qq update"
-RUN "apt-get -y -qq install git vim curl"
+RUN "apt-get -y -qq install git vim curl zip"
 
 ################################################################################
 # Apache install & securisation
